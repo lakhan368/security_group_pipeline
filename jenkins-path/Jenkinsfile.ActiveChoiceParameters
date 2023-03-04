@@ -16,18 +16,18 @@ pipeline {
                                         $class: 'GroovyScript',
                                         fallbackScript: [
                                             classpath: [],
-                                            sandbox: false,
+                                            sandbox: true,
                                             script:
                                                 "return['Could not get The environemnts']"
                                         ],
                                         script: [
                                             classpath: [],
-                                            sandbox: false,
+                                            sandbox: true,
                                             script:
                                                 "return['dev','stage','prod']"
                                         ]
                                     ]
-                                    sandbox(true)
+                                   
                                 ],
                                 [$class: 'CascadeChoiceParameter',
                                     choiceType: 'PT_SINGLE_SELECT',
@@ -38,12 +38,12 @@ pipeline {
                                         [$class: 'GroovyScript',
                                         fallbackScript: [
                                                 classpath: [],
-                                                sandbox: false,
+                                                sandbox: true,
                                                 script: "return['Could not get Environment from Env Param']"
                                                 ],
                                         script: [
                                                 classpath: [],
-                                                sandbox: false,
+                                                sandbox: true,
                                                 script: '''
                                                 if (Env.equals("dev")){
                                                     return["ami-sd2345sd", "ami-asdf245sdf", "ami-asdf3245sd"]
@@ -56,7 +56,7 @@ pipeline {
                                                 }
                                                 '''
                                             ]
-                                            sandbox(true)
+                                           
                                     ]
                                 ],
                                 [$class: 'DynamicReferenceParameter',
