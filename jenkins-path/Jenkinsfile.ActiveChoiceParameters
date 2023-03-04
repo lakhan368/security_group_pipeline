@@ -64,9 +64,9 @@ pipeline {
                                     description: 'Select the  AMI based on the following information',
                                     name: 'Image Information',
                                     referencedParameters: 'ENVIRONMENT',
-                                    
                                     script:
                                         [$class: 'GroovyScript',
+                                        sandbox: true,
                                         script: 'return["Could not get AMi Information"]',
                                         script: [
                                             script: '''
