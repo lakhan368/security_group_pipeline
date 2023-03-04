@@ -10,7 +10,7 @@ pipeline {
                                     choiceType: 'PT_SINGLE_SELECT', 
                                     description: 'Select the Environemnt from the Dropdown List', 
                                     filterLength: 1, 
-                                    filterable: false, 
+                                    filterable: true, 
                                     name: 'Env', 
                                     script: [
                                         $class: 'GroovyScript', 
@@ -37,7 +37,7 @@ pipeline {
                                         [$class: 'GroovyScript', 
                                         fallbackScript: [
                                                 classpath: [], 
-                                                sandbox: false, 
+                                                sandbox: true, 
                                                 script: "return['Could not get Environment from Env Param']"
                                                 ], 
                                         script: [
