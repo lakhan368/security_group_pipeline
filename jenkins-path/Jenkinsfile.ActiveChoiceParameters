@@ -1,96 +1,91 @@
 pipeline {
     agent any
         stages {
-            stage('Parameters') {
+            stage('Parameters'){
                 steps {
                     script {
                     properties([
                             parameters([
-                                [$class: 'ChoiceParameter',
-                                    choiceType: 'PT_SINGLE_SELECT',
-                                    description: 'Select the Environemnt from the Dropdown List',
-                                    filterLength: 1,
-                                    filterable: false,
-                                    name: 'ENVIRONMENT',
+                                [$class: 'ChoiceParameter', 
+                                    choiceType: 'PT_SINGLE_SELECT', 
+                                    description: 'Select the Environemnt from the Dropdown List', 
+                                    filterLength: 1, 
+                                    filterable: false, 
+                                    name: 'Env', 
                                     script: [
-                                        $class: 'GroovyScript',
+                                        $class: 'GroovyScript', 
                                         fallbackScript: [
-                                            classpath: [],
-                                            sandbox: true,
-                                            script:
+                                            classpath: [], 
+                                            sandbox: false, 
+                                            script: 
                                                 "return['Could not get The environemnts']"
-                                        ],
+                                        ], 
                                         script: [
-                                            classpath: [],
-                                            sandbox: true,
-                                            script:
-                                                "return['travel-qa', 'travel-prod', 'travel-stage']"
+                                            classpath: [], 
+                                            sandbox: false, 
+                                            script: 
+                                                "return['dev','stage','prod']"
                                         ]
                                     ]
-                                   
                                 ],
-                                [$class: 'CascadeChoiceParameter',
-                                    choiceType: 'PT_SINGLE_SELECT',
+                                [$class: 'CascadeChoiceParameter', 
+                                    choiceType: 'PT_SINGLE_SELECT', 
                                     description: 'Select the AMI from the Dropdown List',
-                                    name: 'AMI List',
-                                    referencedParameters: 'ENVIRONMENT',
-                                    script:
-                                        [$class: 'GroovyScript',
+                                    name: 'AMI List', 
+                                    referencedParameters: 'Env', 
+                                    script: 
+                                        [$class: 'GroovyScript', 
                                         fallbackScript: [
-                                                classpath: [],
-                                                sandbox: true,
+                                                classpath: [], 
+                                                sandbox: false, 
                                                 script: "return['Could not get Environment from Env Param']"
-                                                ],
+                                                ], 
                                         script: [
-                                                classpath: [],
-                                                sandbox: true,
+                                                classpath: [], 
+                                                sandbox: false, 
                                                 script: '''
-                                                if (ENVIRONMENT.equals("travel-qa")){
+                                                if (Env.equals("dev")){
                                                     return["ami-sd2345sd", "ami-asdf245sdf", "ami-asdf3245sd"]
                                                 }
-                                                else if(ENVIRONMENT.equals("travel-stage")){
+                                                else if(Env.equals("stage")){
                                                     return["ami-sd34sdf", "ami-sdf345sdc", "ami-sdf34sdf"]
                                                 }
-                                                else if(ENVIRONMENT.equals("travel-prod")){
+                                                else if(Env.equals("prod")){
                                                     return["ami-sdf34sdf", "ami-sdf34ds", "ami-sdf3sf3"]
                                                 }
                                                 '''
-                                            ]
-                                           
+                                            ] 
                                     ]
                                 ],
-                                [$class: 'DynamicReferenceParameter',
-                                    choiceType: 'ET_ORDERED_LIST',
-                                    description: 'Select the  AMI based on the following information',
-                                    name: 'Image Information',
-                                    referencedParameters: 'ENVIRONMENT',
-                                    script:
-                                        [$class: 'GroovyScript',
-                                     
-                                        script: 'return["Could not get AMi Information"]',
+                                [$class: 'DynamicReferenceParameter', 
+                                    choiceType: 'ET_ORDERED_LIST', 
+                                    description: 'Select the  AMI based on the following infomration', 
+                                    name: 'Image Information', 
+                                    referencedParameters: 'Env', 
+                                    script: 
+                                        [$class: 'GroovyScript', 
+                                        script: 'return["Could not get AMi Information"]', 
                                         script: [
                                             script: '''
-                                                    if (ENVIRONMENT.equals("travel-qa")){
+                                                    if (Env.equals("dev")){
                                                         return["ami-sd2345sd:  AMI with Java", "ami-asdf245sdf: AMI with Python", "ami-asdf3245sd: AMI with Groovy"]
                                                     }
-                                                    else if(ENVIRONMENT.equals("travel-stage")){
+                                                    else if(Env.equals("stage")){
                                                         return["ami-sd34sdf:  AMI with Java", "ami-sdf345sdc: AMI with Python", "ami-sdf34sdf: AMI with Groovy"]
                                                     }
-                                                    else if(ENVIRONMENT.equals("travel-prod")){
+                                                    else if(Env.equals("prod")){
                                                         return["ami-sdf34sdf:  AMI with Java", "ami-sdf34ds: AMI with Python", "ami-sdf3sf3: AMI with Groovy"]
                                                     }
                                                     '''
                                                 ]
                                         ]
-                                      
                                 ]
                             ])
                         ])
                     }
                 }
             }
-
-            stage('Example Test') {
+                        stage('Example Test') {
 
             steps {
                 echo 'Hello, JDK'
@@ -99,5 +94,7 @@ pipeline {
 
             }
             }
-        }
+        }   
 }
+
+
