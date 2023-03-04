@@ -84,6 +84,7 @@ pipeline {
                         ])
                     }
                 }
+                echo "Deploying ${env.Env}. Have a nice day."
             }
         }   
 }
