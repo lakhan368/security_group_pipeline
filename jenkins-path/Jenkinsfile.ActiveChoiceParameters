@@ -24,7 +24,7 @@ pipeline {
                                             classpath: [],
                                             sandbox: true,
                                             script:
-                                                "return["travel-qa", "travel-prod", "travel-stage"]"
+                                                "return['travel-qa', 'travel-prod', 'travel-stage']"
                                         ]
                                     ]
                                    
@@ -45,13 +45,13 @@ pipeline {
                                                 classpath: [],
                                                 sandbox: true,
                                                 script: '''
-                                                if (ENVIRONMENT.equals("dev")){
+                                                if (ENVIRONMENT.equals("travel-qa")){
                                                     return["ami-sd2345sd", "ami-asdf245sdf", "ami-asdf3245sd"]
                                                 }
-                                                else if(ENVIRONMENT.equals("stage")){
+                                                else if(ENVIRONMENT.equals("travel-stage")){
                                                     return["ami-sd34sdf", "ami-sdf345sdc", "ami-sdf34sdf"]
                                                 }
-                                                else if(ENVIRONMENT.equals("prod")){
+                                                else if(ENVIRONMENT.equals("travel-prod")){
                                                     return["ami-sdf34sdf", "ami-sdf34ds", "ami-sdf3sf3"]
                                                 }
                                                 '''
@@ -70,13 +70,13 @@ pipeline {
                                         script: 'return["Could not get AMi Information"]',
                                         script: [
                                             script: '''
-                                                    if (ENVIRONMENT.equals("dev")){
+                                                    if (ENVIRONMENT.equals("travel-qa")){
                                                         return["ami-sd2345sd:  AMI with Java", "ami-asdf245sdf: AMI with Python", "ami-asdf3245sd: AMI with Groovy"]
                                                     }
-                                                    else if(ENVIRONMENT.equals("stage")){
+                                                    else if(ENVIRONMENT.equals("travel-stage")){
                                                         return["ami-sd34sdf:  AMI with Java", "ami-sdf345sdc: AMI with Python", "ami-sdf34sdf: AMI with Groovy"]
                                                     }
-                                                    else if(ENVIRONMENT.equals("prod")){
+                                                    else if(ENVIRONMENT.equals("travel-prod")){
                                                         return["ami-sdf34sdf:  AMI with Java", "ami-sdf34ds: AMI with Python", "ami-sdf3sf3: AMI with Groovy"]
                                                     }
                                                     '''
