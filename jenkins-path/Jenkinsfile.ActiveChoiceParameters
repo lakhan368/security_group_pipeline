@@ -16,7 +16,7 @@ pipeline {
                                         $class: 'GroovyScript', 
                                         fallbackScript: [
                                             classpath: [], 
-                                            sandbox: false, 
+                                            sandbox: true, 
                                             script: 
                                                 "return['Could not get The environemnts']"
                                         ], 
@@ -42,7 +42,7 @@ pipeline {
                                                 ], 
                                         script: [
                                                 classpath: [], 
-                                                sandbox: false, 
+                                                sandbox: true, 
                                                 script: '''
                                                 if (Env.equals("dev")){
                                                     return["ami-sd2345sd", "ami-asdf245sdf", "ami-asdf3245sd"]
