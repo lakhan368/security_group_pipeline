@@ -66,7 +66,8 @@ pipeline {
                                         [$class: 'GroovyScript', 
                                         script: 'return["Could not get AMi Information"]', 
                                         script: [
-                                            sandbox: true, 
+                                            classpath: [],
+                                            sandbox: true,
                                             script: '''
                                                     if (Env.equals("dev")){
                                                         return["ami-sd2345sd:  AMI with Java", "ami-asdf245sdf: AMI with Python", "ami-asdf3245sd: AMI with Groovy"]
