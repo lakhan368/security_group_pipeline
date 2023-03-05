@@ -85,15 +85,7 @@ pipeline {
                     }
                 }
             }
-                        stage('Example Test') {
 
-            steps {
-                echo 'Hello, JDK'
-                 echo "Deploying ${env.ENVIRONMENT}. Have a nice day."
-                
-
-            }
-            }
         }   
 }
 
