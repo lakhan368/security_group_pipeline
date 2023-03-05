@@ -24,11 +24,9 @@ try:
             {'IpProtocol': 'tcp',
              'FromPort': 80,
              'ToPort': 80,
-             'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
-            {'IpProtocol': 'tcp',
-             'FromPort': 22,
-             'ToPort': 22,
-             'IpRanges': [{'CidrIp': '0.0.0.0/0'}]}
+             'IpRanges': [{'CidrIp': '0.0.0.0/0','Description': 'string'}]
+            'Ipv6Ranges': [{'CidrIpv6': '::/0','Description': 'string'}]
+             }
         ])
     print('Ingress Successfully Set %s' % data)
 except ClientError as e:
