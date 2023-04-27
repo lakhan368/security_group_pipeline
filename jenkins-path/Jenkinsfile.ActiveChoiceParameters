@@ -1,6 +1,6 @@
 pipeline {
-    agent any 
-    stages {
+    agent any
+    stages {
         stage('CF Stack Opreation ') {
             environment {
                 CLOUDFRONT = "test"
