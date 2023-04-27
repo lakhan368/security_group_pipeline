@@ -1,96 +1,46 @@
 pipeline {
-    agent any
-        stages {
-            stage('Parameters'){
-                steps {
-                    script {
-                    properties([
-                            parameters([
-                                [$class: 'ChoiceParameter', 
-                                    choiceType: 'PT_SINGLE_SELECT', 
-                                    description: 'Select the Environemnt from the Dropdown List', 
-                                    filterLength: 1, 
-                                    filterable: false, 
-                                    name: 'Env', 
-                                    script: [
-                                        $class: 'GroovyScript', 
-                                        fallbackScript: [
-                                            classpath: [], 
-                                            sandbox: false, 
-                                            script: 
-                                                "return['Could not get The environemnts']"
-                                        ], 
-                                        script: [
-                                            classpath: [], 
-                                            sandbox: true, 
-                                            script: 
-                                                "return['dev','stage','prod']"
-                                        ]
-                                    ]
-                                ],
-                                [$class: 'CascadeChoiceParameter', 
-                                    choiceType: 'PT_SINGLE_SELECT', 
-                                    description: 'Select the AMI from the Dropdown List',
-                                    name: 'AMI List', 
-                                    referencedParameters: 'Env', 
-                                    script: 
-                                        [$class: 'GroovyScript', 
-                                        fallbackScript: [
-                                                classpath: [], 
-                                                sandbox: true, 
-                                                script: "return['Could not get Environment from Env Param']"
-                                                ], 
-                                        script: [
-                                                classpath: [], 
-                                                sandbox: true, 
-                                                script: '''
-                                                if (Env.equals("dev")){
-                                                    return["ami-sd2345sd", "ami-asdf245sdf", "ami-asdf3245sd"]
-                                                }
-                                                else if(Env.equals("stage")){
-                                                    return["ami-sd34sdf", "ami-sdf345sdc", "ami-sdf34sdf"]
-                                                }
-                                                else if(Env.equals("prod")){
-                                                    return["ami-sdf34sdf", "ami-sdf34ds", "ami-sdf3sf3"]
-                                                }
-                                                '''
-                                            ] 
-                                    ]
-                                ],
-                                [$class: 'DynamicReferenceParameter', 
-                                    choiceType: 'ET_ORDERED_LIST', 
-                                    description: 'Select the  AMI based on the following infomration', 
-                                    name: 'Image Information', 
-                                    referencedParameters: 'Env', 
-                                    script: 
-                                        [$class: 'GroovyScript', 
-                                        script: 'return["Could not get AMi Information"]', 
-                                        script: [
-                                            classpath: [],
-                                            sandbox: true,
-                                            script: '''
-                                                    if (Env.equals("dev")){
-                                                        return["ami-sd2345sd:  AMI with Java", "ami-asdf245sdf: AMI with Python", "ami-asdf3245sd: AMI with Groovy"]
-                                                    }
-                                                    else if(Env.equals("stage")){
-                                                        return["ami-sd34sdf:  AMI with Java", "ami-sdf345sdc: AMI with Python", "ami-sdf34sdf: AMI with Groovy"]
-                                                    }
-                                                    else if(Env.equals("prod")){
-                                                        return["ami-sdf34sdf:  AMI with Java", "ami-sdf34ds: AMI with Python", "ami-sdf3sf3: AMI with Groovy"]
-                                                    }
-                                                    '''
-                                                ]
-                                        ]
-                                ]
-                            ])
-                        ])
+    agent any 
+    stages {
+        stage('CF Stack Opreation ') {
+            environment {
+                CLOUDFRONT = "test"
+                LAMBDA_SECURITY_GROUPS = "test"
+                CULTURE_S3BUCKET = "test"
+                CULTURE_S3_BUCKET = "test"
+            } 
+            steps {
+                script {
+                    def INPUT_PARAMS_ENV = input(
+                        message: 'Please Select Environment',  
+                            ok: 'Next',  
+                            parameters: [
+                            choice(
+                                name: 'ENVIRONMENT',  
+                                    choices: ["travel-qa", "travel-stage", "travel-prod"],  
+                                    description: 'ENVIRONMENT'
+                            )
+                        ]
+                    )
+                    env.ENVIRONMENT = INPUT_PARAMS_ENV if (env.ENVIRONMENT == 'travel-qa') {
+                        echo "ENVIRONMENT : ${env.ENVIRONMENT}" 
+                        withEnv(["CLOUDFRONT=EVAXZ1KW", "LAMBDA_SECURITY_GROUPS=sg-0b35c95168", "CULTURE_S3BUCKET=translation-service-qa", "CULTURE_S3_BUCKET=taas-culture-qa"]) {
+                            echo "CLOUDFRONT:${env.CLOUDFRONT}  LAMBDA_SECURITY_GROUPS:${env.LAMBDA_SECURITY_GROUPS} CULTURE_S3BUCKET : ${env.CULTURE_S3BUCKET} CULTURE_S3_BUCKET :${env.CULTURE_S3_BUCKET}"
+                        }
+                    }
+                    if (env.ENVIRONMENT == 'travel-stage') {
+                        echo "ENVIRONMENT : ${env.ENVIRONMENT}" 
+                        withEnv(["CLOUDFRONT=EX0HBTBJ", "LAMBDA_SECURITY_GROUPS=sg-0c35c2fe16aa", "CULTURE_S3BUCKET=translation-service-stage", "CULTURE_S3_BUCKET=taas-culture-stage"]) {
+                            echo "CLOUDFRONT:${env.CLOUDFRONT}  LAMBDA_SECURITY_GROUPS:${env.LAMBDA_SECURITY_GROUPS} CULTURE_S3BUCKET : ${env.CULTURE_S3BUCKET} CULTURE_S3_BUCKET :${env.CULTURE_S3_BUCKET}"
+                        }
+                    }
+                    if (env.ENVIRONMENT == 'travel-prod') {
+                        echo "ENVIRONMENT : ${env.ENVIRONMENT}" 
+                        withEnv(["CLOUDFRONT=E13689N", "LAMBDA_SECURITY_GROUPS=sg-05b934bf42cbcc", "CULTURE_S3BUCKET=translation-service", "CULTURE_S3_BUCKET=taas-culture"]) {
+                            echo "CLOUDFRONT:${env.CLOUDFRONT}  LAMBDA_SECURITY_GROUPS:${env.LAMBDA_SECURITY_GROUPS} CULTURE_S3BUCKET : ${env.CULTURE_S3BUCKET} CULTURE_S3_BUCKET :${env.CULTURE_S3_BUCKET}"
+                        }
                     }
                 }
             }
-
-            
-
-        }   
+        }
+    }
 }
-
-
