@@ -22,21 +22,21 @@ pipeline {
                         ]
                     )
                     env.ENVIRONMENT = INPUT_PARAMS_ENV if (env.ENVIRONMENT == 'travel-qa') {
-                        echo "ENVIRONMENT : ${env.ENVIRONMENT}" 
+                        echo "ENVIRONMENT : ${env.ENVIRONMENT}"
                         withEnv(["CLOUDFRONT=EVAXZ1KW", "LAMBDA_SECURITY_GROUPS=sg-0b35c95168", "CULTURE_S3BUCKET=translation-service-qa", "CULTURE_S3_BUCKET=taas-culture-qa"]) {
-                            echo "CLOUDFRONT:${env.CLOUDFRONT}  LAMBDA_SECURITY_GROUPS:${env.LAMBDA_SECURITY_GROUPS} CULTURE_S3BUCKET : ${env.CULTURE_S3BUCKET} CULTURE_S3_BUCKET :${env.CULTURE_S3_BUCKET}"
+                            echo "CLOUDFRONT:${env.CLOUDFRONT} LAMBDA_SECURITY_GROUPS:${env.LAMBDA_SECURITY_GROUPS} CULTURE_S3BUCKET : ${env.CULTURE_S3BUCKET} CULTURE_S3_BUCKET :${env.CULTURE_S3_BUCKET}"
                         }
                     }
                     if (env.ENVIRONMENT == 'travel-stage') {
                         echo "ENVIRONMENT : ${env.ENVIRONMENT}"
                         withEnv(["CLOUDFRONT=EX0HBTBJ", "LAMBDA_SECURITY_GROUPS=sg-0c35c2fe16aa", "CULTURE_S3BUCKET=translation-service-stage", "CULTURE_S3_BUCKET=taas-culture-stage"]) {
-                            echo "CLOUDFRONT:${env.CLOUDFRONT}  LAMBDA_SECURITY_GROUPS:${env.LAMBDA_SECURITY_GROUPS} CULTURE_S3BUCKET : ${env.CULTURE_S3BUCKET} CULTURE_S3_BUCKET :${env.CULTURE_S3_BUCKET}"
+                            echo "CLOUDFRONT:${env.CLOUDFRONT} LAMBDA_SECURITY_GROUPS:${env.LAMBDA_SECURITY_GROUPS} CULTURE_S3BUCKET : ${env.CULTURE_S3BUCKET} CULTURE_S3_BUCKET :${env.CULTURE_S3_BUCKET}"
                         }
                     }
                     if (env.ENVIRONMENT == 'travel-prod') {
                         echo "ENVIRONMENT : ${env.ENVIRONMENT}"
                         withEnv(["CLOUDFRONT=E13689N", "LAMBDA_SECURITY_GROUPS=sg-05b934bf42cbcc", "CULTURE_S3BUCKET=translation-service", "CULTURE_S3_BUCKET=taas-culture"]) {
-                            echo "CLOUDFRONT:${env.CLOUDFRONT}  LAMBDA_SECURITY_GROUPS:${env.LAMBDA_SECURITY_GROUPS} CULTURE_S3BUCKET : ${env.CULTURE_S3BUCKET} CULTURE_S3_BUCKET :${env.CULTURE_S3_BUCKET}"
+                            echo "CLOUDFRONT:${env.CLOUDFRONT} LAMBDA_SECURITY_GROUPS:${env.LAMBDA_SECURITY_GROUPS} CULTURE_S3BUCKET : ${env.CULTURE_S3BUCKET} CULTURE_S3_BUCKET :${env.CULTURE_S3_BUCKET}"
                         }
                     }
                 }
