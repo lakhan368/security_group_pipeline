@@ -41,9 +41,13 @@ pipeline {
                         }
                     }
                 }
+                script{
+                    /* groovylint-disable-next-line LineLength */
+                    echo "CLOUDFRONT:${env.CLOUDFRONT} LAMBDA_SECURITY_GROUPS:${env.LAMBDA_SECURITY_GROUPS} CULTURE_S3BUCKET : ${env.CULTURE_S3BUCKET} CULTURE_S3_BUCKET :${env.CULTURE_S3_BUCKET}"
+                }
             }
         }
-        stage('echo ') {
-            echo "CLOUDFRONT:${env.CLOUDFRONT} LAMBDA_SECURITY_GROUPS:${env.LAMBDA_SECURITY_GROUPS} CULTURE_S3BUCKET : ${env.CULTURE_S3BUCKET} CULTURE_S3_BUCKET :${env.CULTURE_S3_BUCKET}"
-    }
-}
+        
+            
+    
+}}
